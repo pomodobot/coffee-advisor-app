@@ -1,5 +1,8 @@
-// generated on 2016-08-26 using generator-webapp 2.1.0
 const gulp = require('gulp');
+const gutil = require('gulp-util');
+const source = require('vinyl-source-stream');
+const browserify = require('browserify');
+
 const gulpLoadPlugins = require('gulp-load-plugins');
 const browserSync = require('browser-sync');
 const del = require('del');
@@ -31,6 +34,17 @@ gulp.task('scripts', () => {
     .pipe($.sourcemaps.write('.'))
     .pipe(gulp.dest('.tmp/scripts'))
     .pipe(reload({stream: true}));
+});
+
+gulp.task('script-browserify', () => {
+  return browserify('app/scripts/main.js')
+    .transform("babelify", {presets: ["es2015"]})
+    .bundle()
+    .on('error', (e) => {
+      gutil.log(e);
+    })
+    .pipe(source('main.js'))
+    .pipe(gulp.dest('.tmp/scripts'))
 });
 
 function lint(files, options) {

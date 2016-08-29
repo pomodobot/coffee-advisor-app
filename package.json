@@ -7,7 +7,9 @@
     "babel-core": "^6.4.0",
     "babel-preset-es2015": "^6.3.13",
     "babel-register": "^6.5.2",
+    "babelify": "^7.3.0",
     "browser-sync": "^2.2.1",
+    "browserify": "^13.1.0",
     "del": "^1.1.1",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^3.0.1",
@@ -25,7 +27,10 @@
     "gulp-sourcemaps": "^1.5.0",
     "gulp-uglify": "^1.1.0",
     "gulp-useref": "^3.0.0",
+    "gulp-util": "^3.0.7",
+    "lie": "^3.1.0",
     "main-bower-files": "^2.5.0",
+    "vinyl-source-stream": "^1.1.0",
     "wiredep": "^2.2.2"
   },
   "eslintConfig": {
@@ -40,5 +45,8 @@
         "single"
       ]
     }
+  },
+  "dependencies": {
+    "whatwg-fetch": "^1.0.0"
   }
 }
