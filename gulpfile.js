@@ -1,7 +1,10 @@
 const gulp = require('gulp');
 const gutil = require('gulp-util');
 const source = require('vinyl-source-stream');
+const buffer = require('vinyl-buffer');
 const browserify = require('browserify');
+
+
 
 const gulpLoadPlugins = require('gulp-load-plugins');
 const browserSync = require('browser-sync');
@@ -27,24 +30,23 @@ gulp.task('styles', () => {
 });
 
 gulp.task('scripts', () => {
-  return gulp.src('app/scripts/**/*.js')
-    .pipe($.plumber())
-    .pipe($.sourcemaps.init())
-    .pipe($.babel())
-    .pipe($.sourcemaps.write('.'))
-    .pipe(gulp.dest('.tmp/scripts'))
-    .pipe(reload({stream: true}));
-});
-
-gulp.task('script-browserify', () => {
-  return browserify('app/scripts/main.js')
-    .transform("babelify", {presets: ["es2015"]})
+  return browserify({
+      entries: './app/scripts/main.js',
+      debug:true
+    })
+    .transform("babelify", {
+      presets: ["es2015"]
+    })
     .bundle()
     .on('error', (e) => {
       gutil.log(e);
     })
     .pipe(source('main.js'))
-    .pipe(gulp.dest('.tmp/scripts'))
+    .pipe(buffer())
+    .pipe($.sourcemaps.init({loadMaps: true}))
+    .pipe($.sourcemaps.write('./'))
+    .pipe(gulp.dest('./.tmp/scripts'))
+    .pipe(reload({stream: true}));
 });
 
 function lint(files, options) {
@@ -74,7 +76,7 @@ gulp.task('lint:test', () => {
 gulp.task('html', ['styles', 'scripts'], () => {
   return gulp.src('app/*.html')
     .pipe($.useref({searchPath: ['.tmp', 'app', '.']}))
-    .pipe($.if('*.js', $.uglify()))
+    //.pipe($.if('*.js', $.uglify()))
     .pipe($.if('*.css', $.cssnano({safe: true, autoprefixer: false})))
     .pipe($.if('*.html', $.htmlmin({collapseWhitespace: true})))
     .pipe(gulp.dest('dist'));

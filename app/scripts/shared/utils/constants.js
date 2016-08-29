@@ -1,3 +1,3 @@
 module.exports = {
-  apiUrl: 'http://motoristacerto.com.br:5000/api/places'
+  apiUrl: 'http://192.241.145.192:5000/api'
 };
