@@ -48,7 +48,6 @@
     }
   },
   "dependencies": {
-    "semantic-ui": "^2.2.4",
     "whatwg-fetch": "^1.0.0"
   }
 }
