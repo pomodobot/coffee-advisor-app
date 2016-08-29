@@ -2,7 +2,7 @@ import Promise from '../utils/promise'
 
 class Geolocation {
 
-  getPosition () {
+  static getPosition () {
     return new Promise(function(resolve, reject){
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -18,4 +18,4 @@ class Geolocation {
 
 }
 
-module.exports = Geolocation;
+export default Geolocation;

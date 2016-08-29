@@ -5,13 +5,12 @@ import Geolocation from './shared/utils/geolocation'
 import fetch from './shared/utils/fetch'
 import placesOrchestrator from './client/placesOrchestrator'
 
-var geolocation = new Geolocation();
 var toaster = new Toaster();
 
 function setNearbyLocations(){
   var latitude, longitude;
 
-  geolocation.getPosition().then(function (geoLocation) {
+  Geolocation.getPosition().then(function (geoLocation) {
     toaster.toast('Posição adquirida com sucesso!');
     latitude = geoLocation.coords.latitude;
     longitude = geoLocation.coords.longitude;
