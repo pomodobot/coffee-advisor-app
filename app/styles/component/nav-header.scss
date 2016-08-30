@@ -1,0 +1,13 @@
+#header-navbar{
+  border-radius: 0;
+  border-color: $primary-color-dark;
+  background: $primary-color-dark;
+
+  .navbar-brand{
+    color: $primary-color-text;
+  }
+
+  .navbar-nav > li > a{
+    color: $primary-color-light;
+  }
+}
