@@ -5,6 +5,12 @@
 
   .navbar-brand{
     color: $primary-color-text;
+
+    &>img{
+      float: left;
+      margin-right: 10px;
+      width: 20px;
+    }
   }
 
   .navbar-nav > li > a{
