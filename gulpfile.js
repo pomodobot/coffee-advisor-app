@@ -139,7 +139,7 @@ gulp.task('serve', ['styles', 'scripts', 'fonts'], () => {
 gulp.task('serve:dist', () => {
   browserSync({
     notify: false,
-    port: 9000,
+    port: 9001,
     server: {
       baseDir: ['dist']
     }
@@ -149,7 +149,7 @@ gulp.task('serve:dist', () => {
 gulp.task('serve:test', ['scripts'], () => {
   browserSync({
     notify: false,
-    port: 9000,
+    port: 9001,
     ui: false,
     server: {
       baseDir: 'test',

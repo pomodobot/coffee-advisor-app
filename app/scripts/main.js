@@ -1,66 +1,37 @@
 'use strict';
-import Contants from './shared/utils/constants'
 import Toaster from './shared/component/toaster'
-import Geolocation from './shared/utils/geolocation'
-import fetch from './shared/utils/fetch'
+import GeoLocation from './shared/utils/geolocation'
+import GoogleMap from './shared/component/googleMap'
+import PlaceResource from "./resources/places";
 
-var toaster = new Toaster();
 
-function mapFitBounds(map, markers) {
-  var bounds = new google.maps.LatLngBounds();
-  for (var i = 0; i < markers.length; i++) {
-    bounds.extend(markers[i].getPosition());
-  }
-  map.fitBounds(bounds);
-}
+function init() {
+  var toaster = new Toaster();
 
-function setNearbyLocations() {
-  Geolocation.getPosition().then(function (geoLocation) {
+  GeoLocation.getPosition().then(function (geoLocation) {
     toaster.toast('Posição adquirida com sucesso!');
-    let lat = geoLocation.coords.latitude;
-    let lng = geoLocation.coords.longitude;
 
-    let currentPos = {lat: lat, lng: lng};
+    let currentPos = {
+      lat: geoLocation.coords.latitude,
+      lng: geoLocation.coords.longitude
+    };
 
-    let map = new google.maps.Map(document.getElementById('map'), {
-      center: currentPos,
-      zoom: 10
-    });
+    let map = new GoogleMap(document.getElementById('map'), currentPos);
 
-    var markers = [new google.maps.Marker({
-      position: currentPos,
-      map: map,
-      title: 'Hello World!'
-    })];
-    mapFitBounds(map, markers);
-
-    getNearbyLocations(lat, lng).then(places=> {
+    PlaceResource.getNearby(currentPos).then(places=> {
       places.forEach(place=> {
-        markers.push(new google.maps.Marker({
+        map.addMarker({
           position: place.location,
-          map: map,
-          title: place.name
-        }));
+          title: place.name,
+          content: place.name
+        });
       });
-      mapFitBounds(map, markers);
+      map.fitBounds();
     });
-
   }, function (error) {
     toaster.toast('Ocorreu um erro ao receber sua localização!');
     console.log(error);
   });
 }
 
-function getNearbyLocations(lat, lng) {
-  return new Promise(function (resolve, reject) {
-    toaster.toast('Buscando cafeterias próximas...');
-    fetch(Contants.apiUrl + `/places?lat=${lat}&lng=${lng}`, {
-      method: 'get'
-    })
-      .then((response) => response.json())
-      .then((json) => resolve(json))
-      .catch((ex) => reject(ex));
-  });
-}
-
-setNearbyLocations();
+init();
