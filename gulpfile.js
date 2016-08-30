@@ -3,8 +3,7 @@ const gutil = require('gulp-util');
 const source = require('vinyl-source-stream');
 const buffer = require('vinyl-buffer');
 const browserify = require('browserify');
-
-
+const pug = require('gulp-pug');
 
 const gulpLoadPlugins = require('gulp-load-plugins');
 const browserSync = require('browser-sync');
@@ -47,6 +46,14 @@ gulp.task('scripts', () => {
     .pipe($.sourcemaps.write('./'))
     .pipe(gulp.dest('./.tmp/scripts'))
     .pipe(reload({stream: true}));
+});
+
+gulp.task('views', function buildHTML() {
+  return gulp.src('./app/views/*.pug')
+  .pipe(pug({
+    // Your options in here.
+  }))
+  .pipe(gulp.dest('./app/views/'))
 });
 
 function lint(files, options) {
@@ -112,7 +119,7 @@ gulp.task('extras', () => {
 
 gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 
-gulp.task('serve', ['styles', 'scripts', 'fonts'], () => {
+gulp.task('serve', ['styles', 'scripts', 'fonts', 'views'], () => {
   browserSync({
     notify: false,
     port: 9000,

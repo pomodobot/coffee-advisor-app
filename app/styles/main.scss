@@ -2,6 +2,7 @@ $icon-font-path: '../fonts/';
 
 // bower:scss
 @import "bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+@import "bower_components/robotodraft/robotodraft.scss";
 // endbower
 
 $RobotoDraftFontPath: "../fonts/robotodraft/fonts"; // REMINDER: edit as appropriate!
@@ -12,6 +13,7 @@ $RobotoDraftFontVersion: "1.0.0";
 
 @import "colors";
 @import "component/button";
+@import "component/modal";
 @import "component/toaster";
 @import "component/map";
 @import "component/nav-header";
