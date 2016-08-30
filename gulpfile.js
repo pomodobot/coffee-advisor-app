@@ -49,11 +49,11 @@ gulp.task('scripts', () => {
 });
 
 gulp.task('views', function buildHTML() {
-  return gulp.src('./app/views/*.pug')
-  .pipe(pug({
-    // Your options in here.
-  }))
-  .pipe(gulp.dest('./app/views/'))
+  return gulp.src('./app/**/*.pug')
+  .pipe(pug())
+  .pipe(gulp.dest(function(file) {
+    return file.base;
+  }));
 });
 
 function lint(files, options) {
