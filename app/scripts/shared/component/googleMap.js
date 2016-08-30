@@ -8,7 +8,8 @@ class GoogleMap {
       mapTypeControl: false,
       scaleControl: false,
       streetViewControl: false,
-      rotateControl: false
+      rotateControl: false,
+      styles: [{"featureType":"all","elementType":"all","stylers":[{"saturation":-80}]},{"featureType":"administrative.country","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"administrative.locality","elementType":"geometry.stroke","stylers":[{"visibility":"on"}]},{"featureType":"administrative.locality","elementType":"labels.text.fill","stylers":[{"hue":"#25ff00"}]},{"featureType":"landscape","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"hue":"#00ffee"},{"saturation":50}]}]
     });
     this.markers = [];
 
