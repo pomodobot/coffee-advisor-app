@@ -11,6 +11,7 @@ $RobotoDraftFontVersion: "1.0.0";
 @import "bower_components/robotodraft/sass/robotodraft.scss";    // REMINDER: edit as appropriate!
 
 @import "colors";
+@import "component/button";
 @import "component/toaster";
 @import "component/map";
 @import "component/nav-header";
