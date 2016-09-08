@@ -2,11 +2,16 @@
 import Toaster from './shared/component/toaster'
 import GeoLocation from './shared/utils/geolocation'
 import GoogleMap from './shared/component/googleMap'
-import PlaceResource from "./resources/places";
+import PlaceResource from "./resources/places"
+import LocationForm from "./new-location"
 
 
 function init() {
-  var toaster = new Toaster();
+
+  $('.switch').bootstrapSwitch();
+
+  let toaster = new Toaster();
+  let location = new LocationForm();
 
   GeoLocation.getPosition().then(function (geoLocation) {
     toaster.toast('Posição adquirida com sucesso!');

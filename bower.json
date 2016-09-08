@@ -4,7 +4,8 @@
   "dependencies": {
     "bootstrap-sass": "~3.3.5",
     "modernizr": "~2.8.1",
-    "robotodraft": "^1.1.0"
+    "robotodraft": "^1.1.0",
+    "bootstrap-switch": "^3.3.2"
   },
   "overrides": {
     "bootstrap-sass": {

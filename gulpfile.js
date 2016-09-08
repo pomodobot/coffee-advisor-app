@@ -30,7 +30,7 @@ gulp.task('styles', () => {
 
 gulp.task('scripts', () => {
   return browserify({
-      entries: './app/scripts/main.js',
+      entries: ['./app/scripts/main.js', './app/scripts/new-location.js'],
       debug:true
     })
     .transform("babelify", {
@@ -132,11 +132,11 @@ gulp.task('serve', ['styles', 'scripts', 'fonts', 'views'], () => {
   });
 
   gulp.watch([
-    'app/*.html',
     'app/images/**/*',
     '.tmp/fonts/**/*'
   ]).on('change', reload);
 
+  gulp.watch('app/styles/**/*.pug', ['views']);
   gulp.watch('app/styles/**/*.scss', ['styles']);
   gulp.watch('app/scripts/**/*.js', ['scripts']);
   gulp.watch('app/fonts/**/*', ['fonts']);

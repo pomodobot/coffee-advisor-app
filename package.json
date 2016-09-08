@@ -50,6 +50,7 @@
     }
   },
   "dependencies": {
+    "form-serialize": "^0.7.1",
     "whatwg-fetch": "^1.0.0"
   }
 }

@@ -1,0 +1,13 @@
+form#newLocationForm.form-horizontal
+  .form-group
+    label.col-sm-3.control-label(for="inputName") Nome
+    .col-sm-9
+      input#inputName.form-control(type="text" name="name" placeholder="Nome da cafeteria/estabelecimento")
+  .form-group
+    label.col-sm-3.control-label(for="inputInternet") Possuí internet?
+    .col-sm-9
+      input#inputInternet.switch(type="checkbox" name="internet" data-on-text="SIM" data-off-text="NÃO")
+  .form-group
+    label.col-sm-3.control-label(for="inputEnergy") Possuí tomada?
+    .col-sm-9
+      input#inputEnergy.switch(type="checkbox" name="energy" data-on-text="SIM" data-off-text="NÃO")

@@ -5,7 +5,8 @@
         button.close(type='button', data-dismiss='modal', aria-label='Fechar')
           span(aria-hidden='true') &times;
         h4#myModalLabel.modal-title Sinalizar cafeteria existente
-      .modal-body  ...
+      .modal-body
+        include component/new-location
       .modal-footer
         button.btn.btn-default(type='button', data-dismiss='modal') Fechar
-        button.btn.btn-primary(type='button') Salvar
+        button#saveLocation.btn.btn-primary(type='button') Salvar
