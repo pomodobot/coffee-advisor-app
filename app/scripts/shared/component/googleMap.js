@@ -1,7 +1,6 @@
 class GoogleMap {
   constructor(element, center) {
     this.map = new google.maps.Map(element, {
-      center: center,
       zoom: 10,
       draggable: false,
       zoomControl: false,
@@ -90,6 +89,10 @@ class GoogleMap {
       });
     }
     return marker;
+  }
+
+  resize(){
+    google.maps.event.trigger(this.map, "resize");
   }
 }
 
