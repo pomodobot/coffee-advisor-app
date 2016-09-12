@@ -7,9 +7,6 @@ import GoogleMap from './shared/component/googleMap'
 import PlaceResource from "./resources/places"
 import LocationForm from "./new-location"
 
-let toaster = new Toaster();
-let location = new LocationForm();
-
 class Main {
   constructor(){
     this.initComponents();
@@ -18,7 +15,7 @@ class Main {
 
   async init() {
     let actualPosition = await GeoLocation.getPosition();
-    toaster.toast('Posição adquirida com sucesso!');
+    this.toaster.toast('Posição adquirida com sucesso!');
 
     let currentPos = {
       lat: actualPosition.coords.latitude,
@@ -33,23 +30,30 @@ class Main {
 
     this.map.fitBounds();
 
-    let places = await PlaceResource.getNearby(currentPos);
-    places.forEach(place=> {
-      this.map.addMarker({
-        position: place.location,
-        title: place.name,
-        content: place.name
-      });
-    });
+    this.toaster.toast('Requisitando cafeterias próximas...');
+    try{
+      let places = await PlaceResource.getNearby(currentPos);
+      this.toaster.toast(`${places.length} cafeteria(s) encontrada(s)!`);
 
-    this.map.fitBounds();
+      places.forEach(place=> {
+        this.map.addMarker({
+          position: place.location,
+          title: place.name,
+          content: place.name
+        });
+      });
+      this.map.fitBounds();
+    }catch(exception){
+      this.toaster.toast('Erro ao tentar adquirir cafeterias!');
+    }
   }
 
   initComponents(){
     $('.switch').bootstrapSwitch();
     this.map = new GoogleMap(document.getElementById('map'));
+    this.toaster = new Toaster();
   }
 }
 
-
 new Main();
+new LocationForm();
