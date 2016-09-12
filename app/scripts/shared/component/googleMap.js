@@ -116,4 +116,4 @@ class GoogleMap {
   }
 }
 
-module.exports = GoogleMap;
+export default GoogleMap;

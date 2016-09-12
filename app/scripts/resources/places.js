@@ -2,7 +2,7 @@ import Constants from '../shared/utils/constants'
 import fetch from '../shared/utils/fetch'
 import Promise from '../shared/utils/promise'
 
-module.exports = {
+let PlaceResource = {
   getNearby: function (position) {
     return new Promise(function (resolve, reject) {
       fetch(Constants.apiUrl + `/places?lat=${position.lat}&lng=${position.lng}`, {
@@ -29,3 +29,5 @@ module.exports = {
     });
   }
 };
+
+export default PlaceResource;
