@@ -1,5 +1,6 @@
 'use strict';
 
+import "babel-polyfill"
 import Serialize from "form-serialize"
 import Place from "./models/place"
 import PlaceResource from "./resources/places"
@@ -15,9 +16,9 @@ class LocationForm{
     $(this.addmodal).on('show.bs.modal', evt => this.setMapWithActualLocation(evt));
   }
 
-  setMapWithActualLocation(){
+  async setMapWithActualLocation(){
     let that = this;
-    GeoLocation.getPosition().then(geoLocation => {
+    let geoLocation = await GeoLocation.getPosition()
       let location = {
         lat: geoLocation.coords.latitude,
         lng: geoLocation.coords.longitude
@@ -25,7 +26,6 @@ class LocationForm{
 
       let map = new GoogleMap(document.getElementById('newLocationMap'), location);
       map.fitBounds();
-    });
   }
 
   static saveLocationClick(){
@@ -50,8 +50,6 @@ class LocationForm{
       }
     });
   }
-
-
 }
 
 export default LocationForm;

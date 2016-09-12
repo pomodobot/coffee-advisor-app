@@ -29,12 +29,12 @@ gulp.task('styles', () => {
 });
 
 gulp.task('scripts', () => {
-  return browserify({
-      entries: ['./app/scripts/main.js', './app/scripts/new-location.js'],
+  return browserify(['./app/scripts/main.js', './app/scripts/new-location.js'],
+    {
       debug:true
     })
     .transform("babelify", {
-      presets: ["es2015"]
+      presets: ["es2015", "stage-0"]
     })
     .bundle()
     .on('error', (e) => {
