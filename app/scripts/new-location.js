@@ -12,8 +12,8 @@ class LocationForm{
     this.saveButton = document.getElementById('saveLocation');
     this.saveButton.addEventListener('click', evt => this.saveLocationClick(evt));
 
-    this.addmodal = document.getElementById('newLocationModal');
-    $(this.addmodal).on('show.bs.modal', evt => this.setMapWithActualLocation(evt));
+    this.addModal = document.getElementById('newLocationModal');
+    $(this.addModal).on('show.bs.modal', evt => this.setMapWithActualLocation(evt));
   }
 
   async setMapWithActualLocation(){
