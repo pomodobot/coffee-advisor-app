@@ -10,45 +10,46 @@ import GoogleMap from './shared/component/googleMap'
 class LocationForm{
   constructor(){
     this.saveButton = document.getElementById('saveLocation');
-    this.saveButton.addEventListener('click', evt => LocationForm.saveLocationClick(evt));
+    this.saveButton.addEventListener('click', evt => this.saveLocationClick(evt));
 
     this.addmodal = document.getElementById('newLocationModal');
     $(this.addmodal).on('show.bs.modal', evt => this.setMapWithActualLocation(evt));
   }
 
   async setMapWithActualLocation(){
-    let that = this;
-    let geoLocation = await GeoLocation.getPosition()
-      let location = {
-        lat: geoLocation.coords.latitude,
-        lng: geoLocation.coords.longitude
-      };
+    let geoLocation = await GeoLocation.getPosition();
+    let location = {
+      lat: geoLocation.coords.latitude,
+      lng: geoLocation.coords.longitude
+    };
 
-      let map = new GoogleMap(document.getElementById('newLocationMap'), location);
-      map.fitBounds();
+    if(!this.map){
+      this.map = new GoogleMap(document.getElementById('newLocationMap'), location);
+    }
+
+    this.map.fitBounds();
   }
 
-  static saveLocationClick(){
-    GeoLocation.getPosition().then(geoLocation => {
-      let formObject = document.getElementById('newLocationForm');
-      let serializedObject = Serialize(formObject, { hash: true } );
+  async saveLocationClick(){
+    let geoLocation = await GeoLocation.getPosition();
+    let formObject = document.getElementById('newLocationForm');
+    let serializedObject = Serialize(formObject, { hash: true } );
 
-      serializedObject.location = {
-        lat: geoLocation.coords.latitude,
-        lng: geoLocation.coords.longitude
-      };
+    serializedObject.location = {
+      lat: geoLocation.coords.latitude,
+      lng: geoLocation.coords.longitude
+    };
 
-      let place = new Place();
-      place.fromForm(serializedObject);
+    let place = new Place();
+    place.fromForm(serializedObject);
 
-      if(place.isValid()){
-        PlaceResource.save(place).then(response => {
-          console.log(response);
-        });
-      }else{
-        console.log('Modelo inválido!');
-      }
-    });
+    if(place.isValid()){
+      PlaceResource.save(place).then(response => {
+        console.log(response);
+      });
+    }else{
+      console.log('Modelo inválido!');
+    }
   }
 }
 

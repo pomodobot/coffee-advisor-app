@@ -57,11 +57,14 @@ class GoogleMap {
     });
     this.markers = [];
 
-    this.addMarker({
-      position: center,
-      title: "My location"
-    });
-    this.fitBounds();
+    if(center){
+      this.addMarker({
+        position: center,
+        title: "My location"
+      });
+      this.fitBounds();
+    }
+
   }
 
   fitBounds() {
@@ -78,6 +81,23 @@ class GoogleMap {
       map: this.map,
       title: markerData.title
     });
+
+    if(markerData.type === 'person'){
+      marker.setIcon({
+        scaledSize: new google.maps.Size(33, 33), // scaled size
+        origin: new google.maps.Point(0,0), // origin
+        anchor: new google.maps.Point(16, 16), // anchor
+        url: 'images/position.svg',
+      });
+    }else{
+      marker.setIcon({
+        scaledSize: new google.maps.Size(44, 44), // scaled size
+        origin: new google.maps.Point(0,0), // origin
+        anchor: new google.maps.Point(22, 22), // anchor
+        url: 'images/pin.svg',
+      });
+    }
+
     this.markers.push(marker);
 
     if (markerData.content) {

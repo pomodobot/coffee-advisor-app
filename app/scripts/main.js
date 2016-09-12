@@ -1,42 +1,55 @@
 'use strict';
+
+import "babel-polyfill"
 import Toaster from './shared/component/toaster'
 import GeoLocation from './shared/utils/geolocation'
 import GoogleMap from './shared/component/googleMap'
 import PlaceResource from "./resources/places"
 import LocationForm from "./new-location"
 
+let toaster = new Toaster();
+let location = new LocationForm();
 
-function init() {
+class Main {
+  constructor(){
+    this.initComponents();
+    this.init();
+  }
 
-  $('.switch').bootstrapSwitch();
-
-  let toaster = new Toaster();
-  let location = new LocationForm();
-
-  GeoLocation.getPosition().then(function (geoLocation) {
+  async init() {
+    let actualPosition = await GeoLocation.getPosition();
     toaster.toast('Posição adquirida com sucesso!');
 
     let currentPos = {
-      lat: geoLocation.coords.latitude,
-      lng: geoLocation.coords.longitude
+      lat: actualPosition.coords.latitude,
+      lng: actualPosition.coords.longitude
     };
 
-    let map = new GoogleMap(document.getElementById('map'), currentPos);
-
-    PlaceResource.getNearby(currentPos).then(places=> {
-      places.forEach(place=> {
-        map.addMarker({
-          position: place.location,
-          title: place.name,
-          content: place.name
-        });
-      });
-      map.fitBounds();
+    this.map.addMarker({
+      type: 'person',
+      position: currentPos,
+      title: 'Your position'
     });
-  }, function (error) {
-    toaster.toast('Ocorreu um erro ao receber sua localização!');
-    console.log(error);
-  });
+
+    this.map.fitBounds();
+
+    let places = await PlaceResource.getNearby(currentPos);
+    places.forEach(place=> {
+      this.map.addMarker({
+        position: place.location,
+        title: place.name,
+        content: place.name
+      });
+    });
+
+    this.map.fitBounds();
+  }
+
+  initComponents(){
+    $('.switch').bootstrapSwitch();
+    this.map = new GoogleMap(document.getElementById('map'));
+  }
 }
 
-init();
+
+new Main();
